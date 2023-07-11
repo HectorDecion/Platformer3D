@@ -5,38 +5,41 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.EventSystems;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 4f;
 
 
     public Transform groundCheck;
-
+    public Transform centroDelPlayer;
     private Rigidbody rb;
     public LayerMask groundLayer;
+    private Animator animatorplayer;
+    private float horizontalInput;
+    private float verticalInput;
 
-    private bool isGrounded;
+    public bool grounded; //Solo para ver si esta activa o no
 
-    private Vector3 moveDirection;
 
-    private Animator animatordancing;
-
-    //Camera
-
+    public AudioSource danceaudio;
+    public AudioSource walkingaudio;
+    public AudioSource jumpaudio;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animatordancing = GetComponent<Animator>();
-    //    offSet = transform.position - this.transform.position;
+        animatorplayer = GetComponent<Animator>();
+        //    offSet = transform.position - this.transform.position;
     }
 
     private void Update()
     {
         playerControl();
         IsTouchingGround();
+        salto();
+        Debug.DrawRay(centroDelPlayer.transform.position, -Vector3.up * 2f, UnityEngine.Color.red);
 
     }
 
@@ -47,48 +50,80 @@ public class PlayerController : MonoBehaviour
 
     void playerControl()
     {
-
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
         //Calcular direccion de movimiento
-        moveDirection = (transform.forward * verticalInput + transform.right * horizontalInput).normalized;
+        // moveDirection = (transform.forward * verticalInput + transform.right * horizontalInput).normalized;
         //  rb.velocity = new Vector3(moveDirection.x * moveSpeed, moveDirection.y, 0f);
 
-        //Aplicar Movimiento en la direccion calculada
-        rb.velocity = moveDirection * moveSpeed;
+        transform.Translate(horizontalInput * 4f * Time.deltaTime, 0, verticalInput * 4f * Time.deltaTime);
 
-        //   float dancing = Input.GetAxis("F");
-         if (Input.GetKeyDown(KeyCode.F))
+       if (horizontalInput != 0f || verticalInput != 0f)
+       {
+            
+            animatorplayer.SetBool("isRunning", true);
+            
+        }
+       else
+       {
+            animatorplayer.SetBool("isRunning", false);
+          
+     }
+            //Aplicar Movimiento en la direccion calculada
+            //   rb.velocity = moveDirection * moveSpeed;
+
+            //   float dancing = Input.GetAxis("F");
+            if (Input.GetKeyDown(KeyCode.F))
             {
-            animatordancing.SetBool("isDancing", true);
-            animatordancing.SetBool("isIdle", false);
+            danceaudio.Play();
+            animatorplayer.SetBool("isDancing", true);
+            animatorplayer.SetBool("isIdle", false);
         }
          else
         {
-            animatordancing.SetBool("isDancing", false);
-            animatordancing.SetBool("isIdle", true);
+            animatorplayer.SetBool("isDancing", false);
+            animatorplayer.SetBool("isIdle", true);
         }
     }
-    void IsTouchingGround()
+    bool IsTouchingGround()
     {
         //Verificar que el jugador este tocando el piso
+        if (Physics.Raycast(centroDelPlayer.transform.position, -Vector3.up, 1.5f, groundLayer))
+                {
+            grounded = true;
+            return true;
 
-        isGrounded = Physics.Raycast(groundCheck.position, -Vector3.up, 0.1f, groundLayer);
-
-        if (isGrounded && Input.GetButtonDown("Jump"))
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        Debug.DrawRay(transform.position, -Vector3.up, UnityEngine.Color.red);
+        else 
+        {
+            grounded = false;
+            return false;
+        }
+
+       
 
     }
-    private void cameraOpt()
+    public void salto()
     {
-
+        
+        if (Input.GetButtonDown("Jump") && IsTouchingGround())
+        {
+            
+            jumpaudio.Play();
+            animatorplayer.SetBool("isJumping", true);
+            rb.velocity += Vector3.up * jumpForce;
+        }
+        //Si está cayendo
+        if (rb.velocity.y < 0) //Si está cayendo
+        {
+            animatorplayer.SetBool("isJumping", false);
+        }
     }
     private void LateUpdate()
     {
 
 
     }
+
 }

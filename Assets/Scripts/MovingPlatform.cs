@@ -6,8 +6,6 @@ public class MovingPlatform : MonoBehaviour
 {
     public Transform PointA;
     public Transform PointB;
-
-    private SpriteRenderer spriteRendererPartner;  //Flip X
     private Transform targetPointPartner;
 
     // Seek Vars
@@ -17,7 +15,6 @@ public class MovingPlatform : MonoBehaviour
     private void Start()
     {
         targetPointPartner = PointA;
-        spriteRendererPartner = GetComponent<SpriteRenderer>(); //Flip X
     }
 
     public void Update()
@@ -33,13 +30,6 @@ public class MovingPlatform : MonoBehaviour
         {
             // Si el enemigo llega al punto A cambia al B y viceversa
             targetPointPartner = (targetPointPartner == PointA) ? PointB : PointA;
-
-            if (spriteRendererPartner.flipX) //Flip X
-            {
-                spriteRendererPartner.flipX = false;
-            }
-            else
-                spriteRendererPartner.flipX = true;
         }
         // Mover al enemigo hacia el punto actual
         float step = speed * Time.deltaTime;
