@@ -29,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
 
     public AudioSource restartaudio;
     public AudioSource itemaudio;
+    public AudioSource itemNullAudio;
     private void Start()
     {
         currentHealth = maxHealth;
@@ -56,6 +57,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += recoverAmount;
             itemaudio.Play();
         }
+        else
+        {
+            itemNullAudio.Play();  
+}
     }
     private void Die()
     { 

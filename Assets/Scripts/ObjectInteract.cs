@@ -8,6 +8,7 @@ public class ObjectInteract : MonoBehaviour
     public Inventario inventario;
     public TMP_Text starText; // The TextMeshPro object to display
     public int var = 0;
+    public AudioSource llavesaudio;
     void Start()
     {
         inventario = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventario>();
@@ -26,6 +27,7 @@ public class ObjectInteract : MonoBehaviour
             inventario.Cantidad = inventario.Cantidad + 1;
             var = inventario.Cantidad;
             starText.SetText("Llaves: " + var);
+            llavesaudio.Play();
             Destroy(gameObject,1f);
         }
     }

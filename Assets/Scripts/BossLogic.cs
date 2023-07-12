@@ -75,7 +75,5 @@ public class BossLogic : MonoBehaviour
     {
         animatorplayer = GetComponent<Animator>();
     }
-    void retardo()
-    { }
 }
 
