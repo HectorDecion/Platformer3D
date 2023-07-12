@@ -32,11 +32,11 @@ public class BossLogic : MonoBehaviour
             Vector3 posJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
             transform.LookAt(posJugador);
             transform.position = Vector3.MoveTowards(transform.position, posJugador, velocidad * Time.deltaTime);
-            animatorplayer.SetBool("isRunning", true);
+            animatorplayer.SetBool("isWalking", true);
         }
         else
         {
-            animatorplayer.SetBool("isRunning", false);
+            animatorplayer.SetBool("isWalking", false);
             animatorplayer.SetBool("isAttacking", false);
         }
         if (gameObject.CompareTag("Player"))
@@ -73,6 +73,9 @@ public class BossLogic : MonoBehaviour
     }
     private void Start()
     {
+        animatorplayer = GetComponent<Animator>();
     }
+    void retardo()
+    { }
 }
 
