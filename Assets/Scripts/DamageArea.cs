@@ -6,6 +6,7 @@ using UnityEngine;
 public class DamageArea : MonoBehaviour
 {
     public int damageAmount = 10; // Cantidad de daño que hace el objeto
+    public AudioSource deadZoneAudio;
     private void OnTriggerEnter(Collider other)
     {
       // Comprobar si el objeto que colisiono es el jugador
@@ -15,6 +16,7 @@ public class DamageArea : MonoBehaviour
         {
              playerhealth.TakeDamage(damageAmount);
             Debug.Log("Daño Recibido");
+            deadZoneAudio.Play();
         }
 
     }
