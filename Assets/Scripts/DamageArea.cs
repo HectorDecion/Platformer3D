@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
-    public int damageAmount = 10; // Cantidad de daño que hace el objeto
     public AudioSource deadZoneAudio;
     private void OnTriggerEnter(Collider other)
     {
@@ -14,9 +13,17 @@ public class DamageArea : MonoBehaviour
 
         if (playerhealth != null )
         {
-             playerhealth.TakeDamage(damageAmount);
+            if(PowerUp.sharedInstance.powerUpActive)
+            {
+                playerhealth.TakeDamage(EnemyManager.sharedInstance.damageAmount[0]);
+            }
+            else
+            {
+
+                playerhealth.TakeDamage(EnemyManager.sharedInstance.damageAmount[1]);
             Debug.Log("Daño Recibido");
             deadZoneAudio.Play();
+        }
         }
 
     }
