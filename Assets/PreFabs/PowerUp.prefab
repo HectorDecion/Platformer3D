@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpActive: 0
+  powerUpAudio: {fileID: 7282240910320812324, guid: 250942773dfcf4440949fb210049b3b5, type: 3}
 --- !u!198 &216711747258176041
 ParticleSystem:
   m_ObjectHideFlags: 0

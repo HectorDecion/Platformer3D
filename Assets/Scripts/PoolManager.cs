@@ -11,6 +11,8 @@ public class PoolManager : MonoBehaviour
     private Queue<GameObject> objPool;
 
     public GameObject sinMunicion;
+    public AudioSource recargabalasaudio;
+    public AudioSource shootaudio;
 
     //Singleton
 
@@ -36,7 +38,6 @@ public class PoolManager : MonoBehaviour
         }
 
     }
-
     public GameObject GetObjectFromPool(Vector3 newPosition, Quaternion newRotacion)
     {
         while (objPool.Count > 0)
@@ -44,7 +45,10 @@ public class PoolManager : MonoBehaviour
             GameObject newObj = objPool.Dequeue();
 
             newObj.SetActive(true);
+
             newObj.transform.SetPositionAndRotation(newPosition, newRotacion);
+
+            shootaudio.Play();
 
             return newObj;
         }
@@ -57,6 +61,7 @@ public class PoolManager : MonoBehaviour
 
     public void ReturnObjToPool(GameObject go)
     {
+        recargabalasaudio.Play();
         go.SetActive(false);
         objPool.Enqueue(go);
     }

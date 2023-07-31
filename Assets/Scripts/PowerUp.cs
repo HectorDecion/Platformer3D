@@ -8,7 +8,7 @@ public class PowerUp : MonoBehaviour
 
     public bool powerUpActive;
 
-
+    public AudioSource powerUpAudio;
 
     private void Awake()
     {
@@ -32,7 +32,8 @@ public class PowerUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ApplyPowerUpEffect(other.gameObject);
-            Destroy(gameObject);
+            powerUpAudio.Play();
+            Destroy(gameObject,1f);
         }
     }
 

@@ -7,7 +7,7 @@ public class SpawnPoint : MonoBehaviour
     public Transform spawnPoint;
     public GameObject cubePrefab;
     public float cubeForce = 20f;
-    public AudioSource shootaudio;
+  //  public AudioSource shootaudio;
 
     private void Start()
     {
@@ -17,11 +17,16 @@ public class SpawnPoint : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Invoke("espera", 5f);
             GameObject cube = PoolManager.sharedInstance.GetObjectFromPool(spawnPoint.position, spawnPoint.rotation);
 
             Rigidbody rb = cube.GetComponent<Rigidbody>();
             rb.AddForce(spawnPoint.forward * cubeForce, ForceMode.Impulse);
-            shootaudio.Play();
+        //    shootaudio.Play();
         }
+    }
+    public void espera()
+    {
+
     }
 }
