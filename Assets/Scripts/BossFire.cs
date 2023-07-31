@@ -22,6 +22,9 @@ public class BossFire: MonoBehaviour
 
     //animaciones
     private Animator animatorplayer;
+
+    //Sistema de vidas Boss
+
     void Update()
     {
 
@@ -49,7 +52,7 @@ public class BossFire: MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-     //   Gizmos.DrawIcon(transform.position, "rangoDeAlerta");
+        Gizmos.DrawWireSphere(transform.position, rangoDeAlerta);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -67,7 +70,7 @@ public class BossFire: MonoBehaviour
             this.transform.position = transportar.transform.position;
             Debug.Log("IntentoDeTP");
         }
-        
+
         //     if (gameObject.CompareTag("Player"))
         //if (other.gameObject.tag == "Player")
     }
@@ -75,5 +78,6 @@ public class BossFire: MonoBehaviour
     {
         animatorplayer = GetComponent<Animator>();
     }
+
 }
 

@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animatorplayer = GetComponent<Animator>();
         //    offSet = transform.position - this.transform.position;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
