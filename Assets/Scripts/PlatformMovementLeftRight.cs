@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlatformMovementLeftRight : MonoBehaviour
@@ -9,10 +10,13 @@ public class PlatformMovementLeftRight : MonoBehaviour
 
     private Vector3 initialPosition;
     private float movementDirection = 1f;
+    public Transform playerPosicion;
+    public Transform playerTP;
 
     private void Start()
     {
         initialPosition = transform.position;
+        playerTP = GetComponent<Transform>();
     }
 
     private void Update()
@@ -25,5 +29,16 @@ public class PlatformMovementLeftRight : MonoBehaviour
         {
             movementDirection *= -1f;
         }
+        playerPosicion = GetComponent<Transform>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerPosicion.transform.position = playerTP.transform.position;
+
+        }
     }
 }
+
