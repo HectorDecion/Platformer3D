@@ -8,6 +8,7 @@ public class SceneStart : MonoBehaviour
 {
         public void toTutorial()
         {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(00);
     }
 }

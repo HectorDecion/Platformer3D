@@ -9,6 +9,9 @@ public class Bullets : MonoBehaviour
 
     //Boss Damage Logic
     public int damageAmount = 10;
+
+    //Score Logic
+    public int scoreAmount = 10;
     void Update()
     {
         if (lifeTime < 0.0f)
@@ -22,9 +25,11 @@ public class Bullets : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         BossHealth Bosshealth = other.GetComponent<BossHealth>();
+        ScoreManager scoreincrement = other.GetComponent<ScoreManager>();
         if (other.gameObject.name == "BossFire")
         {
             Bosshealth.TakeDamage(damageAmount);
+            scoreincrement.sumaScore(scoreAmount);
         }
   //  else if (Bosshealth != null)
      //   {
